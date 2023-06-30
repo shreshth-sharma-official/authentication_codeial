@@ -5,6 +5,13 @@ const port = 8000;
 const cookieparser=require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
+
+//express session 
+
+const session=require('express-session');
+const passport=require('passport');
+const passportlocal=require('./config/passport-local-statergy');
+
 //here we tell app to use cookie parser
 app.use(cookieparser());
 app.use(express.static('./assets'));
@@ -27,13 +34,28 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 
-// use express router
-app.use('/', require('./routes'));
+
 
 // set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// set up middle-ware of express session
+app.use(session({
+    name:'codial',
+    secret:"something",
+    saveUninitialized:false,
+    resave:false,
+    cookie:{
+        maxAge:(1000*60*100)
+    }
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// use express router
+app.use('/', require('./routes'));
 
 app.listen(port, function(err){
     if (err){

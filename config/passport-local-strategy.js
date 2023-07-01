@@ -11,13 +11,12 @@ passport.use(new LocalStrategy({
     },
     function(email, password, done){
         // find a user and establish the identity
-        //.............email in schema: passing parameter email
         User.findOne({email: email}, function(err, user)  {
             if (err){
                 console.log('Error in finding user --> Passport');
                 return done(err);
             }
-                //user is not find or password doesn't match
+
             if (!user || user.password != password){
                 console.log('Invalid Username/Password');
                 return done(null, false);
@@ -70,5 +69,7 @@ passport.setAuthenticatedUser = function(req, res, next){
 
     next();
 }
+
+
 
 module.exports = passport;

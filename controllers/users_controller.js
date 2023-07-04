@@ -1,6 +1,5 @@
 const User = require('../models/user');
-const express=require('express');
-const app=express;
+
 
 module.exports.profile = function(req, res){
     return res.render('user_profile', {
@@ -58,15 +57,11 @@ module.exports.create = function(req, res){
 
 // sign in and create a session for the user
 module.exports.createSession = function(req, res){
-    return res.redirect('/users/profile');
+    return res.redirect('/');
 }
 
 module.exports.destroySession = function(req, res){
-    
-    req.logout(function(err) {
-        if (err) { return (err); }
-        res.redirect('/');
-      });
+    req.logout();
 
     return res.redirect('/');
 }

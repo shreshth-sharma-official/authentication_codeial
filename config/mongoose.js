@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/development');
+mongoose.connect('mongodb://localhost/development', { useNewUrlParser: true,
+useUnifiedTopology: true,
+useCreateIndex: true,
+useFindAndModify: false });
 
 const db = mongoose.connection;
 
